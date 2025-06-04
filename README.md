@@ -1,6 +1,7 @@
 # ReadList Assistant
 
-Curate, filter, and explore book recommendations from Ezra Klein’s podcast, with enrichment from Goodreads and a simple web UI.
+Semi-automated assistant to curate books of interest...
+Curate, filter, and explore book recommendations from trusted sources (e.g., Ezra Klein’s podcast) with enrichment from Goodreads and a simple web UI.
 
 ---
 
@@ -100,5 +101,3 @@ readlist-assistant/
 - For API rate limits or scraping captchas, consider caching or using a proxy.
 
 ---
-
-Happy reading!
