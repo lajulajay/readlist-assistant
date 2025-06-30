@@ -1,48 +1,73 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import BookTable from "./components/BookTable";
-import FilterBar from "./components/FilterBar";
+/**
+ * ReadList Assistant - Main React Application
+ * 
+ * This is the root component of the ReadList Assistant frontend application.
+ * It provides the main layout, routing, and theme configuration for the book
+ * recommendation management system.
+ * 
+ * Features:
+ * - Material-UI theme configuration
+ * - React Router for navigation
+ * - Responsive layout with navigation bar
+ * - Book list and detail views
+ * 
+ * @author ReadList Assistant Team
+ */
 
-export interface Book {
-  title: string;
-  author: string;
-  summary?: string;
-  genre?: string;
-  num_ratings?: number;
-  avg_rating?: number;
-  source_url?: string;
-}
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
+import { Box, Container } from '@mui/material';
+import Navbar from './components/Navbar';
+import BookList from './components/BookList';
+import BookDetail from './components/BookDetail';
 
-const API_URL = "http://localhost:8000";
+// Create a Material-UI theme instance with custom styling
+const theme = createTheme({
+  palette: {
+    mode: 'light',
+    primary: {
+      main: '#1976d2', // Blue primary color
+    },
+    secondary: {
+      main: '#dc004e', // Pink secondary color
+    },
+    background: {
+      default: '#f5f5f5', // Light gray background
+    },
+  },
+  typography: {
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+    ].join(','),
+  },
+});
 
+/**
+ * Main App component that renders the application layout and routing
+ */
 function App() {
-  const [books, setBooks] = useState<Book[]>([]);
-  const [filters, setFilters] = useState({
-    genre: "",
-    minRatings: "",
-    minRating: ""
-  });
-
-  const fetchBooks = async () => {
-    const params: any = {};
-    if (filters.genre) params.genre = filters.genre;
-    if (filters.minRatings) params.min_ratings = filters.minRatings;
-    if (filters.minRating) params.min_rating = filters.minRating;
-    const res = await axios.get<Book[]>(`${API_URL}/books`, { params });
-    setBooks(res.data);
-  };
-
-  useEffect(() => {
-    fetchBooks();
-    // eslint-disable-next-line
-  }, [filters]);
-
   return (
-    <div style={{ maxWidth: 900, margin: "2rem auto" }}>
-      <h1>ReadList Assistant</h1>
-      <FilterBar filters={filters} setFilters={setFilters} />
-      <BookTable books={books} />
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Router>
+        <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
+          <Navbar />
+          <Container component="main" sx={{ mt: 4, mb: 4, flex: 1 }}>
+            <Routes>
+              <Route path="/" element={<BookList />} />
+              <Route path="/book/:id" element={<BookDetail />} />
+            </Routes>
+          </Container>
+        </Box>
+      </Router>
+    </ThemeProvider>
   );
 }
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Book } from "../App";
+import { Book } from "../types";
 
 const BookTable: React.FC<{ books: Book[] }> = ({ books }) => (
   <table style={{ width: "100%", borderCollapse: "collapse" }}>

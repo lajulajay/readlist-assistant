@@ -1,0 +1,36 @@
+# Web Framework
+fastapi>=0.109.2
+uvicorn[standard]>=0.27.1
+
+# Database
+sqlalchemy>=2.0.27
+psycopg2-binary>=2.9.9
+alembic>=1.13.1
+
+# Environment and Settings
+python-dotenv>=1.0.1
+pydantic>=2.6.1
+pydantic-settings>=2.1.0
+
+# Authentication (for future use)
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+python-multipart>=0.0.9
+
+# HTTP Client
+requests>=2.31.0
+aiohttp>=3.9.3
+beautifulsoup4>=4.12.3
+lxml>=5.1.0
+fake-useragent>=1.4.0
+tenacity>=8.2.3  # for retrying failed requests
+
+# Web Scraping
+selenium>=4.18.1
+webdriver-manager>=4.0.1
+
+# Development Tools
+pytest>=8.0.0  # for testing
+black>=24.1.1  # for code formatting
+isort>=5.13.2  # for import sorting
+flake8>=7.0.0  # for linting 

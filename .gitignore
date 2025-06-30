@@ -2,14 +2,121 @@
 venv/
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
+.Python
+*.egg-info/
+*.egg
+.env
+tests/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
 
-# Node
+# Node.js
 node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.npm
+.yarn-integrity
 build/
 dist/
+.next/
+.nuxt/
+.vuepress/dist
+.serverless/
+.fusebox/
+.dynamodb/
 
-# macOS
+# React
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+*.tsbuildinfo
+
+# IDEs and Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
 
 # Logs
 *.log
+logs/
+*.log.*
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# HuggingFace/Transformers cache
+.cache/
+.huggingface/
+# Torch cache
+torch_cache/
+# Model files
+*.bin
+*.pt
+*.pth
+*.safetensors
+
+# Machine Learning
+models/
+checkpoints/
+wandb/
+mlruns/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*.orig
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Backup files
+*.backup
+*.bak
+*.old
+
+# Archive files
+*.zip
+*.tar.gz
+*.rar
+
+# Local development
+.local/
+local/
