@@ -11,7 +11,6 @@
 # - Virtual environment activation
 # - Backend service management (start if not running)
 # - Batch episode processing (5 most recent episodes)
-# - Email notifications for success/failure
 # - Comprehensive logging to refresh.log
 # - Error handling and graceful failure
 # 
@@ -22,7 +21,6 @@
 # Dependencies:
 # - .env file with EMAIL_TO variable
 # - Python virtual environment
-# - mail command for notifications
 # - curl for API communication
 # 
 # Author: ReadList Assistant Team
@@ -36,23 +34,10 @@ else
     exit 1
 fi
 
-# Check if EMAIL_TO is set
-if [ -z "$EMAIL_TO" ]; then
-    echo "ERROR: EMAIL_TO variable is not set in .env file"
-    exit 1
-fi
-
 # Configuration
 LOG_FILE="$(dirname "$0")/../logs/refresh.log"
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
 VENV_PATH="$(dirname "$0")/../venv/bin/activate"
-
-# Function to send email
-send_email() {
-    local subject="$1"
-    local body="$2"
-    echo "$body" | mail -s "$subject" "$EMAIL_TO"
-}
 
 # Function to log messages
 log_message() {
@@ -63,7 +48,6 @@ log_message() {
 # Change to the project directory
 cd "$(dirname "$0")/.." || {
     log_message "ERROR: Failed to change to project directory"
-    send_email "Database Refresh Failed" "Failed to change to project directory"
     exit 1
 }
 
@@ -73,7 +57,6 @@ if [ -f "$VENV_PATH" ]; then
     source "$VENV_PATH"
 else
     log_message "ERROR: Virtual environment not found at $VENV_PATH"
-    send_email "Database Refresh Failed" "Virtual environment not found at $VENV_PATH"
     exit 1
 fi
 
@@ -87,7 +70,6 @@ if ! pgrep -f "uvicorn app.main:app" > /dev/null; then
     # Check if service started successfully
     if ! pgrep -f "uvicorn app.main:app" > /dev/null; then
         log_message "ERROR: Failed to start backend service"
-        send_email "Database Refresh Failed" "Failed to start backend service"
         exit 1
     fi
     log_message "Backend service started successfully"
@@ -103,10 +85,8 @@ body=$(echo "$response" | sed '$d')
 if [ "$status_code" -eq 200 ]; then
     log_message "Database refresh completed successfully"
     log_message "Response: $body"
-    send_email "Database Refresh Successful" "The weekly database refresh completed successfully.\n\nResponse:\n$body"
 else
     log_message "ERROR: Database refresh failed with status code $status_code"
     log_message "Error response: $body"
-    send_email "Database Refresh Failed" "The weekly database refresh failed with status code $status_code.\n\nError response:\n$body"
     exit 1
 fi 
